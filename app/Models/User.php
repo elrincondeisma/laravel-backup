@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Devdojo\Auth\Models\User as AuthUser;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends AuthUser
 {
     use HasFactory, Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -44,5 +46,15 @@ class User extends AuthUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get all of the backups for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function backups(): HasMany
+    {
+        return $this->hasMany(Backup::class);
     }
 }
